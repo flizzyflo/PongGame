@@ -1,7 +1,7 @@
 from GameItem import GameItem
 from tkinter import *
 from random import randrange
-
+from PIL import Image, ImageTk
 
 class Ball(GameItem):
 
@@ -15,9 +15,9 @@ class Ball(GameItem):
 
     def create_ball(self):
         """Initialization of the ball item"""
-
         self.ball = self.gameboard.canvasItem.create_oval(self.size, self.size * 3, self.size * 3, self.size * 5, fill=self.colour)
 
+      
 
     def random_start(self):
         """Random selection of a starting direction of the ball"""
