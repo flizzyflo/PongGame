@@ -11,15 +11,20 @@ class Ball(GameItem):
         self.size = size
         self.colour = colour
         self.plank_object = PlankObject
+        self.defeated = False
+        
         
 
-    def create_ball(self):
+    def create_ball(self) -> None:
         """Initialization of the ball item"""
         self.ball = self.gameboard.canvasItem.create_oval(self.size, self.size * 3, self.size * 3, self.size * 5, fill=self.colour)
 
+
+    def set_defeated(self) -> None:
+        self.defeated = True
       
 
-    def random_start(self):
+    def random_start(self) -> None:
         """Random selection of a starting direction of the ball"""
 
         random_value = randrange(0, 3)
@@ -40,7 +45,7 @@ class Ball(GameItem):
             self.move_up()
 
 
-    def move_left(self):
+    def move_left(self) -> None:
         """Move the ball left until it hits the left border. Bounces back 
         from the left border of the gameboard rightwards."""
 
@@ -54,7 +59,7 @@ class Ball(GameItem):
             self.gameboard.canvasItem.after(self.SPEED, self.move_left)
 
 
-    def move_right(self):
+    def move_right(self) -> None:
         """Move the ball right until it hits the right border. Bounces back 
         from the right border of the gameboard leftwards."""
 
@@ -68,7 +73,7 @@ class Ball(GameItem):
             self.gameboard.canvasItem.after(self.SPEED, self.move_right)
 
 
-    def move_up(self):
+    def move_up(self) -> None:
         """Move the ball up until it hits the topmost border. Bounces back 
         from the border of the gameboard downwards."""
 
@@ -82,7 +87,7 @@ class Ball(GameItem):
             self.gameboard.canvasItem.after(self.SPEED, self.move_up)
 
 
-    def move_down(self):
+    def move_down(self) -> None:
         """Move the ball down until it hits either the plank and bounces back
         or it hits the border. If it hits the lower boundary, the game is over."""
 
@@ -95,7 +100,9 @@ class Ball(GameItem):
             self.move_up()
 
         elif self.get_coords(self.plank_object.plank)[1] < ball_y2_coord - 5:
-            self.gameboard.canvasItem.after_cancel(self.gameboard.canvasItem.after(self.SPEED, self.move_down))
+            self.set_defeated()
+            if self.defeated:
+                self.gameboard.canvasItem.after_cancel(self.gameboard.canvasItem.after(self.SPEED, self.move_down))
 
         else:
             self.gameboard.canvasItem.after(self.SPEED, self.move_down)

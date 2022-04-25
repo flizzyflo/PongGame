@@ -21,6 +21,6 @@ class GameBoard:
         return self.HEIGHT
 
 
-    def main(self):
+    def main(self) -> None:
         self.root.mainloop()
 

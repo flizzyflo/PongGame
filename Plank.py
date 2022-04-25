@@ -12,10 +12,10 @@ class Plank(GameItem):
     def create_plank(self) -> None:
         """Initialization of the plank item"""
         
-        self.plank = self.gameboard.canvasItem.create_rectangle(self.start_x - 10, self.start_y - 10, self.start_x - 85, self.start_y - 20, fill=self.colour)
+        self.plank = self.gameboard.canvasItem.create_rectangle(self.start_x - 20, self.start_y - 20, self.start_x - 95, self.start_y - 30, fill=self.colour)
 
 
-    def move_left(self):
+    def move_left(self) -> None:
         """Move left until the plank hits the most left border"""
 
         self.gameboard.canvasItem.move(self.plank, -1, 0)
@@ -28,7 +28,7 @@ class Plank(GameItem):
             self.gameboard.canvasItem.after(self.SPEED, self.move_left)
 
 
-    def move_right(self):
+    def move_right(self) -> None:
         """Move right until the plank hits the most right border"""
 
         self.gameboard.canvasItem.move(self.plank, 1, 0)
