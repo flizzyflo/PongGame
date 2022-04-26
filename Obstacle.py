@@ -9,7 +9,7 @@ class Obstacle(GameItem):
     def __init__(self, GameBoard: object) -> None:
         super().__init__(GameBoard)
         self.destroyed = False
-        self.point_value = 0
+        self.score_value = 0
         self.colour_list =["red", "green", "blue", "grey"]
         self.colour = self.colour_list[randrange[0, self.colour_list.length - 1]]
 

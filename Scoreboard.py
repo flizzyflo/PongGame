@@ -3,12 +3,13 @@
 class Scoreboard:
     """Represents the score one has already reached. Increases per destroyed obstacle"""
     
-    PlayerScore = 0
+    def __init__(self) -> None:
+        self.PlayerScore = 0
 
-    def set_score(self, score:int) -> None:
-        PlayerScore += score
+    def increase_playerscore(self, score:int) -> None:
+        self.PlayerScore += score
 
-    def reset_score(self) -> None:
-        PlayerScore = 0
+    def reset_playerscore(self) -> None:
+        self.PlayerScore = 0
 
     

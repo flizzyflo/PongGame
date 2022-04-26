@@ -44,12 +44,39 @@ class Ball(GameItem):
             self.move_right()
             self.move_up()
 
-    def handle_collision(self)-> None:
+
+    def handle_plank_collision(self) -> bool:
+        """Checks if the ball hits the plank"""
+
+        plank_x1, plank_x2= self.get_coords(self.plank_object.plank)[0], self.get_coords(self.plank_object.plank)[2]
+
+        if plank_x1 <= self.get_coords(self.ball)[2] <= plank_x2:
+            return True
+
+        else:
+            return False
+
+
+    def handle_collision(self)-> bool:
         """Function to handle collision of the ball"""
         
-        pass
+        #left border
+        if self.get_coords(self.ball)[0] < 1:
+            return True
+        
+        #right border
+        elif self.get_coords(self.ball)[2] <= self.gameboard.get_width():
+            pass
 
+        #upper border
+        elif self.get_coords(self.ball)[1] <= 0:
+            pass
 
+        #lower border
+        elif self.get_coords(self.ball)[3] >= self.gameboard.get_height():
+            return True
+
+    
 
     def move_left(self) -> None:
         """Move the ball left until it hits the left border. Bounces back 
@@ -99,13 +126,13 @@ class Ball(GameItem):
 
         self.gameboard.canvasItem.move(self.ball, 0, 1)
         ball_y2_coord = self.get_coords(self.ball)[3]
-        plank_x1, plank_x2= self.get_coords(self.plank_object.plank)[0], self.get_coords(self.plank_object.plank)[3]
+        plank_x1, plank_x2= self.get_coords(self.plank_object.plank)[0], self.get_coords(self.plank_object.plank)[2]
         
         
-        if (self.get_coords(self.plank_object.plank)[1] == ball_y2_coord) and (plank_x1 <= self.get_coords(self.ball)[2] <= plank_x2):
+        if (self.get_coords(self.plank_object.plank)[1] == ball_y2_coord) and (self.handle_plank_collision()):
             self.move_up()
 
-        elif self.get_coords(self.plank_object.plank)[1] < ball_y2_coord - 5:
+        elif self.get_coords(self.plank_object.plank)[1] < ball_y2_coord - 15:
             self.set_defeated()
             if self.defeated:
                 self.gameboard.canvasItem.after_cancel(self.gameboard.canvasItem.after(self.SPEED, self.move_down))
