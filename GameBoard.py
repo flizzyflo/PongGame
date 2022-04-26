@@ -1,6 +1,6 @@
 
 
-
+from Scoreboard import Scoreboard
 from tkinter import *
 
 class GameBoard:
@@ -12,7 +12,7 @@ class GameBoard:
         self.BACKGROUDCOLOUR = bgColour
         self.canvasItem = Canvas(self.root, width= self.WIDTH, height= self.HEIGHT, bg= self.BACKGROUDCOLOUR)
         self.canvasItem.pack()
-
+        self.scoreboard = Scoreboard(self.root)
 
     def get_width(self) -> int:
         return self.WIDTH
@@ -23,5 +23,6 @@ class GameBoard:
 
 
     def main(self) -> None:
+        
         self.root.mainloop()
 

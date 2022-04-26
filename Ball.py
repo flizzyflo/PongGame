@@ -6,13 +6,12 @@ from Scoreboard import Scoreboard
 
 class Ball(GameItem):
 
-    def __init__(self, GameBoardObject: object, PlankObject: object, ScoreboardObject: object, speed: int, size: int = 15, colour: str = "blue") -> None:
+    def __init__(self, GameBoardObject: object, PlankObject: object, speed: int, size: int = 15, colour: str = "blue") -> None:
         super().__init__(GameBoardObject)
         self.SPEED = speed
         self.size = size
         self.colour = colour
         self.plank_object = PlankObject
-        self.score_board_object = ScoreboardObject
         self.x = 0
         self.y = 0
 
@@ -53,7 +52,8 @@ class Ball(GameItem):
         ball_lower_x_value = self.get_coords(self.ball)[2]
 
         if (plank_left_corner <=  ball_lower_x_value <= plank_right_corner) and (plank_upper_corner == ball_lower_corner):
-            self.score_board_object.increase_playerscore(1)
+            self.gameboard.scoreboard.increase_playerscore(1)
+            self.gameboard.scoreboard.set_score()
             return True
 
         else:
