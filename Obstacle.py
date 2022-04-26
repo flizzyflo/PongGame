@@ -16,7 +16,7 @@ class Obstacle(GameItem):
     def create_obstacle(self) -> None:
         self.obstacle = self.gameboard.canvasItem.create_rectangle(20, 20, 30, 30, fill=self.colour)
 
-    def set_destroyed(self) -> None:
+    def destroy_obstacle(self) -> None:
         self.destroyed = True
 
     

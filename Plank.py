@@ -1,5 +1,6 @@
 from GameItem import GameItem
 
+
 class Plank(GameItem):
     
     def __init__(self, GameBoardObject: object, speed: int = 4, colour: str = "green"):
@@ -14,14 +15,22 @@ class Plank(GameItem):
         
         self.plank = self.gameboard.canvasItem.create_rectangle(self.start_x - 20, self.start_y - 20, self.start_x - 95, self.start_y - 30, fill=self.colour)
 
+    def handle_collision(self) -> None:
+        """Handles collision of the plank"""
+
+        if self.get_coords(self.plank)[2] >= self.gameboard.get_width():
+            return True
+
+        elif self.get_coords(self.plank)[0] < 1:
+            return True
+
 
     def move_left(self) -> None:
         """Move left until the plank hits the most left border"""
 
         self.gameboard.canvasItem.move(self.plank, -1, 0)
-        x1_coord = self.get_coords(self.plank)[0]
-
-        if x1_coord < 1:
+        
+        if self.handle_collision():
             self.gameboard.canvasItem.move(self.plank, 0, 0)
 
         else:
@@ -32,9 +41,9 @@ class Plank(GameItem):
         """Move right until the plank hits the most right border"""
 
         self.gameboard.canvasItem.move(self.plank, 1, 0)
-        x2_coord= self.get_coords(self.plank)[2]
+        
 
-        if x2_coord >= self.gameboard.get_width():
+        if self.handle_collision():
             self.gameboard.canvasItem.move(self.plank, 0, 0)
         
         else:

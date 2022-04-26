@@ -44,6 +44,12 @@ class Ball(GameItem):
             self.move_right()
             self.move_up()
 
+    def handle_collision(self)-> None:
+        """Function to handle collision of the ball"""
+        
+        pass
+
+
 
     def move_left(self) -> None:
         """Move the ball left until it hits the left border. Bounces back 
