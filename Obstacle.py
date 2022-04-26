@@ -13,10 +13,15 @@ class Obstacle(GameItem):
         self.colour_list =["red", "green", "blue", "grey"]
         self.colour = self.colour_list[randrange[0, self.colour_list.length - 1]]
 
+
     def create_obstacle(self) -> None:
         self.obstacle = self.gameboard.canvasItem.create_rectangle(20, 20, 30, 30, fill=self.colour)
+
 
     def destroy_obstacle(self) -> None:
         self.destroyed = True
 
+    
+    def get_obstacle_value(self) -> int:
+        return self.score_value
     

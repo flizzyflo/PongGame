@@ -2,17 +2,20 @@
 from GameBoard import GameBoard
 from tkinter import *
 from Ball import Ball
+from Scoreboard import Scoreboard
 from Plank import Plank
 
-def main():
+def main() -> None:
     root = Tk()
     root.title("Playstation 5 Spiel")
     gameboard = GameBoard(root, 400,300,"black")
 
+    scoreboard = Scoreboard()
+
     planke = Plank(gameboard)
     planke.create_plank()
 
-    item = Ball(gameboard, planke, 2)
+    item = Ball(gameboard, planke, scoreboard, 2)
     item.create_ball()
 
     gameboard.canvasItem.focus_set()

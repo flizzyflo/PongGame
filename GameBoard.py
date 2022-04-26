@@ -17,6 +17,7 @@ class GameBoard:
     def get_width(self) -> int:
         return self.WIDTH
 
+
     def get_height(self) -> int:
         return self.HEIGHT
 
