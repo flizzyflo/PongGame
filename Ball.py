@@ -1,19 +1,18 @@
 from GameItem import GameItem
 from tkinter import *
 from random import randrange
-from PIL import Image, ImageTk
-from Scoreboard import Scoreboard
+
 
 class Ball(GameItem):
 
     def __init__(self, GameBoardObject: object, PlankObject: object, speed: int, size: int = 15, colour: str = "blue") -> None:
-        super().__init__(GameBoardObject)
-        self.SPEED = speed
+        super().__init__(GameBoardObject, speed)
         self.size = size
         self.colour = colour
         self.plank_object = PlankObject
         self.x = 0
         self.y = 0
+        self.game_over = False
 
         
     def create_ball(self) -> None:
@@ -45,13 +44,13 @@ class Ball(GameItem):
     def handle_ball_plank_collision(self) -> bool:
         """Checks if the ball hits the plank"""
 
-        plank_left_corner = self.get_coords(self.plank_object.plank)[0]
-        plank_right_corner = self.get_coords(self.plank_object.plank)[2]
-        plank_upper_corner = self.get_coords(self.plank_object.plank)[1]
-        ball_lower_corner = self.get_coords(self.ball)[3]
-        ball_lower_x_value = self.get_coords(self.ball)[2]
+        plank_left_edge = self.get_coords(self.plank_object.plank)[0]
+        plank_right_edge = self.get_coords(self.plank_object.plank)[2]
+        plank_upper_edge = self.get_coords(self.plank_object.plank)[1]
+        ball_lower_edge = self.get_coords(self.ball)[3]
+        ball_lower_x_value = (self.get_coords(self.ball)[0] + self.get_coords(self.ball)[2]) / 2
 
-        if (plank_left_corner <=  ball_lower_x_value <= plank_right_corner) and (plank_upper_corner == ball_lower_corner):
+        if (plank_left_edge <=  ball_lower_x_value <= plank_right_edge) and (plank_upper_edge == ball_lower_edge):
             self.gameboard.scoreboard.increase_playerscore(1)
             self.gameboard.scoreboard.set_score()
             return True
@@ -60,7 +59,7 @@ class Ball(GameItem):
             return False
 
 
-    def handle_collision(self)-> bool:
+    def handle_gameborder_collision(self)-> bool:
         """Function to handle collision of the ball"""
         
         #left border
@@ -77,7 +76,7 @@ class Ball(GameItem):
 
         #lower border
         elif self.get_coords(self.plank_object.plank)[1] < self.get_coords(self.ball)[3] - 15:
-            return False
+            self.game_over = True
 
 
     def move_left(self) -> None:
@@ -88,11 +87,11 @@ class Ball(GameItem):
 
         self.gameboard.canvasItem.move(self.ball, self.x, 0)
      
-        if self.handle_collision():
+        if self.handle_gameborder_collision():
             self.move_right()
 
         else:
-            self.gameboard.canvasItem.after(self.SPEED, self.move_left)
+            self.gameboard.canvasItem.after(self.speed, self.move_left)
 
 
     def move_right(self) -> None:
@@ -102,11 +101,11 @@ class Ball(GameItem):
         self.x = 1
         self.gameboard.canvasItem.move(self.ball, self.x, 0)
 
-        if self.handle_collision():
+        if self.handle_gameborder_collision():
             self.move_left()
         
         else:
-            self.gameboard.canvasItem.after(self.SPEED, self.move_right)
+            self.gameboard.canvasItem.after(self.speed, self.move_right)
 
 
     def move_up(self) -> None:
@@ -116,11 +115,11 @@ class Ball(GameItem):
         self.y = -1
         self.gameboard.canvasItem.move(self.ball, 0, self.y)
 
-        if self.handle_collision():
+        if self.handle_gameborder_collision():
             self.move_down()
 
         else:
-            self.gameboard.canvasItem.after(self.SPEED, self.move_up)
+            self.gameboard.canvasItem.after(self.speed, self.move_up)
 
 
     def move_down(self) -> None:
@@ -133,10 +132,13 @@ class Ball(GameItem):
         if self.handle_ball_plank_collision():
             self.move_up()
 
-        elif self.handle_collision() == False:
+        elif self.game_over:
+          
             self.x, self.y = 0, 0
-            self.gameboard.canvasItem.move(self.ball, self.x, self.y)
+            self.gameboard.canvasItem.move(self.ball, 0, 0)
+            self.gameboard.canvasItem.destroy()
+            self.gameboard.scoreboard.lost_game()
 
         else:
-            self.gameboard.canvasItem.after(self.SPEED, self.move_down)
+            self.gameboard.canvasItem.after(self.speed, self.move_down)
         

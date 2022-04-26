@@ -4,7 +4,7 @@ from GameItem import GameItem
 class Plank(GameItem):
     
     def __init__(self, GameBoardObject: object, speed: int = 4, colour: str = "green") -> None:
-        super().__init__(GameBoardObject)
+        super().__init__(GameBoardObject, speed)
         self.colour = colour
         self.SPEED = speed
         self.start_x, self.start_y = self.gameboard.WIDTH, self.gameboard.HEIGHT

@@ -4,15 +4,15 @@ from abc import abstractmethod
 
 class GameItem:
     
-    def __init__(self, GameBoardObject: object) -> None:
+    def __init__(self, GameBoardObject: object, speed: int) -> None:
         self.gameboard = GameBoardObject
+        self.speed = speed
     
 
     def get_coords(self, GameObject: object) -> tuple[int]:
         """Returns the x1, y1, x2, y2 values of an object. Used to do collision calculation."""
 
         return self.gameboard.canvasItem.bbox(GameObject)
-
 
     def set_speed(self, speed: int) -> None:
         """Set speed of the 'after' method. Can be used to adjust difficulty later on."""
