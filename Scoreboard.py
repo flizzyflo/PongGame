@@ -1,4 +1,4 @@
-
+from tkinter import Label
 
 class Scoreboard:
     """Represents the score one has already reached. Increases per destroyed obstacle"""
@@ -15,4 +15,6 @@ class Scoreboard:
     def reset_playerscore(self) -> None:
         self.player_score = 0
 
-    
+    def set_score(self, LabelObject: object) -> None:
+
+        LabelObject.config(text= f'Score: self.get_playerscore()')

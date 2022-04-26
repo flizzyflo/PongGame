@@ -43,7 +43,7 @@ class Ball(GameItem):
             self.move_up()
 
 
-    def handle_plank_collision(self) -> bool:
+    def handle_ball_plank_collision(self) -> bool:
         """Checks if the ball hits the plank"""
 
         plank_left_corner = self.get_coords(self.plank_object.plank)[0]
@@ -130,7 +130,7 @@ class Ball(GameItem):
         self.y = 1
         self.gameboard.canvasItem.move(self.ball, 0, self.y)
 
-        if self.handle_plank_collision():
+        if self.handle_ball_plank_collision():
             self.move_up()
 
         elif self.handle_collision() == False:

@@ -10,8 +10,9 @@ def main() -> None:
     root.title("Playstation 5 Spiel")
     gameboard = GameBoard(root, 400,300,"black")
 
-    scoreboard = Scoreboard()
 
+    scoreboard = Scoreboard()
+    
     planke = Plank(gameboard)
     planke.create_plank()
 
