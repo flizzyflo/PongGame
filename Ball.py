@@ -5,7 +5,7 @@ from random import randrange
 
 class Ball(GameItem):
 
-    def __init__(self, GameBoardObject: object, PlankObject: object, speed: int, size: int = 15, colour: str = "blue") -> None:
+    def __init__(self, GameBoardObject: object, PlankObject: list[object], speed: int, size: int = 15, colour: str = "blue") -> None:
         super().__init__(GameBoardObject, speed)
         self.size = size
         self.colour = colour
