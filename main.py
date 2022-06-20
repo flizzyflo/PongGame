@@ -8,17 +8,22 @@ def main() -> None:
     root = Tk()
     root.title("Playstation 5 Spiel")
     gameboard = GameBoard(root_window= root, width= 400, height= 300, bgColour= "black")
-
+  
     plankePlayer1 = Plank(GameBoardObject= gameboard)
     plankePlayer1.create_plank()
 
-    item = Ball(GameBoardObject = gameboard, PlankObject = plankePlayer1, speed = 5)
+    plankePlayer2 = Plank(GameBoardObject= gameboard, colour="blue")
+    plankePlayer2.create_plank()
+
+    plankList = [plankePlayer1, plankePlayer2]
+
+    item = Ball(GameBoardObject = gameboard, PlankObject = plankList, speed = 5)
     item.create_ball()
 
     gameboard.canvasItem.focus_set()
-    gameboard.canvasItem.bind("<a>", lambda event: plankePlayer1.move_left())
+    gameboard.canvasItem.bind("<a>", lambda event: plankList[0].move_left())
     gameboard.canvasItem.bind("<s>", lambda event: item.random_start())
-    gameboard.canvasItem.bind("<d>", lambda event: plankePlayer1.move_right())
+    gameboard.canvasItem.bind("<d>", lambda event: plankList[0].move_right())
 
     gameboard.main()
 

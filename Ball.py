@@ -43,40 +43,42 @@ class Ball(GameItem):
 
     def handle_ball_plank_collision(self) -> bool:
         """Checks if the ball hits the plank"""
+        
+        for plank in self.plank_object:
+            plank_left_edge = self.get_coords(plank.plank)[0]
+            plank_right_edge = self.get_coords(plank.plank)[2]
+            plank_upper_edge = self.get_coords(plank.plank)[1]
+            ball_lower_edge = self.get_coords(self.ball)[3]
+            ball_lower_x_value = (self.get_coords(self.ball)[0] + self.get_coords(self.ball)[2]) / 2
 
-        plank_left_edge = self.get_coords(self.plank_object.plank)[0]
-        plank_right_edge = self.get_coords(self.plank_object.plank)[2]
-        plank_upper_edge = self.get_coords(self.plank_object.plank)[1]
-        ball_lower_edge = self.get_coords(self.ball)[3]
-        ball_lower_x_value = (self.get_coords(self.ball)[0] + self.get_coords(self.ball)[2]) / 2
+            if (plank_left_edge <=  ball_lower_x_value <= plank_right_edge) and (plank_upper_edge == ball_lower_edge):
+                self.gameboard.scoreboard.increase_playerscore(1)
+                self.gameboard.scoreboard.set_score()
+                return True
 
-        if (plank_left_edge <=  ball_lower_x_value <= plank_right_edge) and (plank_upper_edge == ball_lower_edge):
-            self.gameboard.scoreboard.increase_playerscore(1)
-            self.gameboard.scoreboard.set_score()
-            return True
-
-        else:
-            return False
+            else:
+                return False
 
 
     def handle_gameborder_collision(self)-> bool:
         """Function to handle collision of the ball"""
         
-        #left border
-        if self.get_coords(self.ball)[0] <= 1:
-            return True
-        
-        #right border
-        elif self.get_coords(self.ball)[2] >= self.gameboard.get_width() - 1:
-            return True
+        for plank in self.plank_object:
+            #left border
+            if self.get_coords(self.ball)[0] <= 1:
+                return True
+            
+            #right border
+            elif self.get_coords(self.ball)[2] >= self.gameboard.get_width() - 1:
+                return True
 
-        #upper border
-        elif self.get_coords(self.ball)[1] <= 1:
-            return True
+            #upper border
+            elif self.get_coords(self.ball)[1] <= 1:
+                return True
 
-        #lower border
-        elif self.get_coords(self.plank_object.plank)[1] < self.get_coords(self.ball)[3] - 15:
-            self.game_over = True
+            #lower border
+            elif self.get_coords(plank.plank)[1] < self.get_coords(self.ball)[3] - 15:
+                self.game_over = True
 
 
     def move_left(self) -> None:
