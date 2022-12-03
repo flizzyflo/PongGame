@@ -1,5 +1,5 @@
 
-from GameBoard import GameBoard
+from UserInterface.GameBoard import GameBoard
 from tkinter import *
 from GameObjects.Ball import Ball
 from GameObjects.Plank import Plank

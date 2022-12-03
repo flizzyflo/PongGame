@@ -1,6 +1,7 @@
 
-from Scoreboard import Scoreboard
 from tkinter import Canvas
+
+from UserInterface.Scoreboard import Scoreboard
 
 class GameBoard(Canvas):
 
