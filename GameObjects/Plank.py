@@ -1,16 +1,16 @@
 from random import randrange
 from GameObjects.GameItem import GameItem
-from Settings.Settings import COLOURS, PLANK_SPEED, PLANK_COLOUR
+from Settings.Settings import COLOURS
 
 
 class Plank(GameItem):
     
-    def __init__(self, GameBoardObject: object, speed: int, colour: str) -> None:
-        super().__init__(GameBoardObject, speed)
-        self.gameboard = GameBoardObject
+    def __init__(self, game_board_object: object, speed: int) -> None:
+        super().__init__(game_board_object, speed)
+        self.gameboard = game_board_object
         self.colour = COLOURS[randrange(0, len(COLOURS) - 1)]
         self.SPEED = speed
-        self.start_x, self.start_y = self.gameboard.WIDTH // 2, self.gameboard.HEIGHT
+        self.start_x, self.start_y = self.gameboard.gameboard_width // 2, self.gameboard.gameboard_height
         self.x = 0
         self.y = 0
 
@@ -24,13 +24,12 @@ class Plank(GameItem):
     def handle_collision(self) -> None:
         """Handles collision of the plank"""
 
-        print(f"{self.x=}{self.y=}")
         #right border of game
-        if self.get_coords(self.plank)[2] >= self.gameboard.get_width():
+        if self.gameboard.get_coords(self.plank)[2] >= self.gameboard.get_width():
             return True
 
         #left border of game
-        elif self.get_coords(self.plank)[0] < 1:
+        elif self.gameboard.get_coords(self.plank)[0] < 1:
             return True
 
 
@@ -58,5 +57,3 @@ class Plank(GameItem):
         
         else:
             self.gameboard.after(self.SPEED, self.move_right)
-    
-    

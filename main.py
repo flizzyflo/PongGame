@@ -1,27 +1,32 @@
-
+from Settings.Settings import FRAME_BORDERWIDTH
+from tkinter import Button, Label, Frame, BOTH, GROOVE
 from UserInterface.GameBoard import GameBoard
-from tkinter import *
-from GameObjects.Ball import Ball
-from GameObjects.Plank import Plank
-from Settings.Settings import BALL_SPEED, COLOURS, PLANK_SPEED
+from UserInterface.Scoreboard import Scoreboard
+
+from UserInterface.main_window import MainWindow
 
 def main() -> None:
-    root = Tk()
-    root.title("Playstation 5 Spiel")
-    gameboard = GameBoard(root_window= root, width= 400, height= 300, bgColour= "black")
+    root = MainWindow()
+
+    information_frame = Frame(root, relief= GROOVE, borderwidth= FRAME_BORDERWIDTH)
+    information_frame.pack(fill=BOTH)
+
+    gameboard_frame = Frame(root, relief=GROOVE, borderwidth= FRAME_BORDERWIDTH)
+    gameboard_frame.pack()
+
+    scoreboard = Scoreboard(master= information_frame)
+    scoreboard.pack()
+    Label(information_frame, text= "Press 'A' to move left\nPress 'D' to move right").pack()
+    start_button = Button(master= information_frame, text= "Start game")
+    start_button.pack(fill= BOTH)
+
+    gameboard = GameBoard(master= gameboard_frame, gameboard_width= 400, gameboard_height= 300, gameboard_background_colour= "black", scoreboard_object= scoreboard)
     gameboard.pack()
-    plankePlayer1 = Plank(GameBoardObject= gameboard, speed= PLANK_SPEED, colour= COLOURS)
-    plankePlayer1.create_plank()
-
-    plankList = [plankePlayer1]
-
-    item = Ball(GameBoardObject = gameboard, PlankObject = plankList, speed = BALL_SPEED)
-    item.create_ball()
-
     gameboard.focus_set()
-    gameboard.bind("<a>", lambda event: plankList[0].move_left())
-    gameboard.bind("<s>", lambda event: item.random_start())
-    gameboard.bind("<d>", lambda event: plankList[0].move_right())
+    gameboard.bind("<a>", lambda event: gameboard.plank.move_left())
+    gameboard.bind("<d>", lambda event: gameboard.plank.move_right())
+
+    start_button.config(command= lambda: gameboard.ball.random_start())
 
     root.mainloop()
     

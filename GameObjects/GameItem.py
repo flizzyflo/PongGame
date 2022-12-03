@@ -4,21 +4,18 @@ from abc import abstractmethod
 
 class GameItem:
     
-    def __init__(self, GameBoardObject: object, speed: int) -> None:
-        self.gameboard = GameBoardObject
-        self.speed = speed
+    """Abstract class for the game items like ball or plank. Provides some methods which can be used to navigate on the canvas."""
+
+
+    def __init__(self, game_board_object: object, object_speed: int) -> None:
+        self.gameboard = game_board_object
+        self.speed = object_speed
     
 
-    def get_coords(self, GameObject: object) -> tuple[int]:
-        """Returns the x1, y1, x2, y2 values of an object. Used to do collision calculation."""
-
-        return self.gameboard.bbox(GameObject)
-
     def set_speed(self, speed: int) -> None:
-        """Set speed of the 'after' method. Can be used to adjust difficulty later on."""
+        """Set speed of the 'after' method. Can be used to adjust difficulty."""
 
         self.speed = speed
-
 
     @abstractmethod
     def move_left(self) -> None:
