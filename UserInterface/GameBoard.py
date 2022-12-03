@@ -14,7 +14,7 @@ class GameBoard(Canvas):
         self.gameboard_height = gameboard_height
 
         self.plank = Plank(self, PLANK_SPEED)
-        self.plank.create_plank()
+        self.plank.create_plank(self.gameboard_width // 2 - 20, self.gameboard_height - 20)
 
         self.ball = Ball(self, self.plank.plank, BALL_SPEED, BALL_SIZE)
         self.ball.create_ball()

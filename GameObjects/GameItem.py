@@ -4,7 +4,8 @@ from abc import abstractmethod
 
 class GameItem:
     
-    """Abstract class for the game items like ball or plank. Provides some methods which can be used to navigate on the canvas."""
+    """Abstract class for the game items like ball or plank. 
+    Provides some methods which can be used to navigate on the canvas."""
 
 
     def __init__(self, game_board_object: object, object_speed: int) -> None:

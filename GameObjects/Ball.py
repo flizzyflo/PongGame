@@ -59,7 +59,7 @@ class Ball(GameItem):
 
         ball_left_edge = self.gameboard.get_coords(self.ball)[0]
         ball_right_edge = self.gameboard.get_coords(self.ball)[2]
-        ball_center_value = (ball_right_edge + ball_left_edge) //2
+        ball_center_value = (ball_right_edge + ball_left_edge) // 2
 
         if (plank_left_edge <= ball_center_value <= plank_right_edge) and (plank_upper_edge == ball_lower_edge):
         
