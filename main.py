@@ -1,32 +1,30 @@
 
 from GameBoard import GameBoard
 from tkinter import *
-from Ball import Ball
-from Plank import Plank
+from GameObjects.Ball import Ball
+from GameObjects.Plank import Plank
+from Settings.Settings import BALL_SPEED, COLOURS, PLANK_SPEED
 
 def main() -> None:
     root = Tk()
     root.title("Playstation 5 Spiel")
     gameboard = GameBoard(root_window= root, width= 400, height= 300, bgColour= "black")
-  
-    plankePlayer1 = Plank(GameBoardObject= gameboard)
+    gameboard.pack()
+    plankePlayer1 = Plank(GameBoardObject= gameboard, speed= PLANK_SPEED, colour= COLOURS)
     plankePlayer1.create_plank()
 
-    plankePlayer2 = Plank(GameBoardObject= gameboard, colour="blue")
-    plankePlayer2.create_plank()
+    plankList = [plankePlayer1]
 
-    plankList = [plankePlayer1, plankePlayer2]
-
-    item = Ball(GameBoardObject = gameboard, PlankObject = plankList, speed = 5)
+    item = Ball(GameBoardObject = gameboard, PlankObject = plankList, speed = BALL_SPEED)
     item.create_ball()
 
-    gameboard.canvasItem.focus_set()
-    gameboard.canvasItem.bind("<a>", lambda event: plankList[0].move_left())
-    gameboard.canvasItem.bind("<s>", lambda event: item.random_start())
-    gameboard.canvasItem.bind("<d>", lambda event: plankList[0].move_right())
+    gameboard.focus_set()
+    gameboard.bind("<a>", lambda event: plankList[0].move_left())
+    gameboard.bind("<s>", lambda event: item.random_start())
+    gameboard.bind("<d>", lambda event: plankList[0].move_right())
 
-    gameboard.main()
-
+    root.mainloop()
+    
 
 if __name__ == '__main__':
     main()
