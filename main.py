@@ -31,7 +31,8 @@ def main() -> None:
                           gameboard_width= GAMEBOARD_WIDTH, 
                           gameboard_height= GAMEBOARD_HEIGTH, 
                           gameboard_background_colour= "black", 
-                          scoreboard_object= scoreboard)
+                          scoreboard_object= scoreboard,
+                          start_button = start_game_button)
     gameboard.pack()
     gameboard.focus_set()
     gameboard.bind("<a>", lambda event: gameboard.plank.move_left())
