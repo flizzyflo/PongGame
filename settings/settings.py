@@ -18,4 +18,5 @@ MIN_PLANK_SIZE: int = 20
 BALL_SPEED: int = 5  # higher value is slower and thus easier
 BALL_SIZE: int = 10
 BALL_TAG: str = "ball"
+MINIMUM_LOWER_DISTANCE: int = 15
 ### Obstacle Constants
