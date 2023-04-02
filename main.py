@@ -1,4 +1,3 @@
-from game_objects.static_objects.obstacle import Obstacle
 from settings.settings import FRAME_BORDERWIDTH, GAMEBOARD_HEIGTH, GAMEBOARD_WIDTH, TITLE
 from tkinter import Button, Label, Frame, BOTH, GROOVE
 from userinterface.gameboard import GameBoard
@@ -42,7 +41,6 @@ def main() -> None:
     gameboard.bind("<d>", lambda event: gameboard.plank.move_right())
 
     start_game_button.config(command=lambda: gameboard.ball.random_start())
-
     root.mainloop()
     
 
