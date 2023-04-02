@@ -1,6 +1,6 @@
 from random import randrange
 
-from game_objects.gameitem import GameItem
+from game_objects.moving_objects.gameitem import GameItem
 from settings.settings import COLOURS, PLANK_SIZE, PLANK_TAG
 
 
