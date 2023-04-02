@@ -1,6 +1,5 @@
-
-from Settings.Settings import TITLE
 from tkinter import Tk
+
 
 class MainWindow(Tk):
 
