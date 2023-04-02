@@ -1,9 +1,9 @@
 
 from tkinter import Canvas, Button, DISABLED, NORMAL
 
-from game_objects.ball import Ball
-from game_objects.gameitem import GameItem
-from game_objects.plank import Plank
+from game_objects.moving_objects.ball import Ball
+from game_objects.moving_objects.gameitem import GameItem
+from game_objects.moving_objects.plank import Plank
 from settings.settings import PLANK_SPEED, MIN_PLANK_SIZE, BALL_SPEED, BALL_SIZE, SCORE_VALUE, MODULO_FOR_DIFFICULTY, \
     PLANK_SIZE_REDUCTION
 from userinterface.scoreboard import Scoreboard
@@ -17,11 +17,11 @@ class GameBoard(Canvas):
                          height=gameboard_height,
                          bg=gameboard_background_colour)
 
-        self.ball = None
-        self.plank = None
-        self.initial_ball_coords = None
-        self.gameboard_width = gameboard_width
-        self.gameboard_height = gameboard_height
+        self.ball: Ball = None
+        self.plank: Plank = None
+        self.initial_ball_coordinates = None
+        self.gameboard_width: int = gameboard_width
+        self.gameboard_height: int = gameboard_height
         self.initialize_gameboard()
         self.scoreboard = scoreboard_object
         self.lost_game = False
@@ -51,7 +51,7 @@ class GameBoard(Canvas):
         self.plank.create_plank(self.gameboard_width // 2 - 20, self.gameboard_height - 20)
         self.ball = Ball(self, self.plank.plank, BALL_SPEED, BALL_SIZE)
         self.ball.create_ball()
-        self.initial_ball_coords = self.coords(self.ball)
+        self.initial_ball_coordinates = self.coords(self.ball)
 
     def restart_game(self) -> None:
         
@@ -61,9 +61,9 @@ class GameBoard(Canvas):
         self.delete("ball")
         self.scoreboard.initialize_scoreboard()
         self.initialize_gameboard()
-        self.start_button.config(text= "Start game", 
-                                 command= lambda: self.ball.random_start(), 
-                                 state= NORMAL)
+        self.start_button.config(text="Start game",
+                                 command=lambda: self.ball.random_start(),
+                                 state=NORMAL)
         self.set_game_status(False)
 
     def get_gameboard_widget_coords(self, game_object: GameItem) -> list[float] | None:
