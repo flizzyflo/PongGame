@@ -3,7 +3,7 @@ from random import randrange
 
 from game_objects.moving_objects.gameitem import GameItem
 from game_objects.moving_objects.plank import Plank
-from settings.settings import COLOURS, BALL_TAG
+from settings.settings import COLOURS, BALL_TAG, MINIMUM_LOWER_DISTANCE
 
 
 class Ball(GameItem):
@@ -53,11 +53,13 @@ class Ball(GameItem):
             self.move_right()
             self.move_up()
 
-        self.gameboard.game_started()
+        self.gameboard.disable_start_button()
 
     def handle_ball_plank_collision(self) -> bool:
         
-        """Checks if the ball hits the plank"""
+        """
+        Checks if the ball hits the plank
+        """
     
         plank_left_edge = self.gameboard.get_gameboard_widget_coords(self.plank)[0]     # x1 value
         plank_upper_edge = self.gameboard.get_gameboard_widget_coords(self.plank)[1]    # y1 value
@@ -70,7 +72,7 @@ class Ball(GameItem):
 
         if (plank_left_edge <= ball_center_value <= plank_right_edge) and (plank_upper_edge == ball_lower_edge):
         
-            self.gameboard.manage_score_and_difficulty()
+            self.gameboard.set_score_and_plank_size()
             return True
 
         else:
@@ -93,26 +95,11 @@ class Ball(GameItem):
             return True
 
         # lower border
-        elif self.gameboard.get_gameboard_widget_coords(self.plank)[1] < self.gameboard.get_gameboard_widget_coords(self.ball)[3] - 15:
-            self.gameboard.set_game_status(True)
+        elif self.gameboard.get_gameboard_widget_coords(self.plank)[1] < self.gameboard.get_gameboard_widget_coords(self.ball)[3] - MINIMUM_LOWER_DISTANCE:
+            self.gameboard.set_game_status(game_is_lost=True)
 
         else:
             return False
-
-    def handle_obstacle_colission(self) -> bool:
-        ...
-        # if self.gameboard.get_gameboard_widget_coords(self.ball)[0] <= Obstacles:
-        #    return True
-        #
-        # elif self.gameboard.get_gameboard_widget_coords(self.ball)[2] >= Obstacle
-        #   return True
-        # elif self.gameboard.get_gameboard_widget_coords(self.ball)[1] >= Obstacle
-        #   return True
-        # elif self.gameboard.get_gameboard_widget_coords(self.ball)[3] >= Obstacle
-        #   return True
-        #
-        # else:
-        #    return False
 
     def move_left(self) -> None:
         
