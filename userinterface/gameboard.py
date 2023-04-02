@@ -27,14 +27,14 @@ class GameBoard(Canvas):
         self.lost_game = False
         self.start_button = start_button
 
-    def game_started(self) -> None:
+    def disable_start_button(self) -> None:
         self.start_button.config(state=DISABLED)
 
-    def set_game_status(self, lost: bool) -> None:
-        self.lost_game = lost
+    def set_game_status(self, game_is_lost: bool) -> None:
+        self.lost_game = game_is_lost
         if self.game_is_lost():
             self.start_button.config(text="Restart Game",
-                                     command=lambda: self.restart_game(),
+                                     command=lambda: self.reset_game(),
                                      state=NORMAL)
 
     def game_is_lost(self) -> bool:
@@ -47,13 +47,19 @@ class GameBoard(Canvas):
 
         """Initializes the plank and ball item"""
 
+        self.initialize_plank_object()
+        self.initialize_ball_object()
+
+    def initialize_plank_object(self) -> None:
         self.plank = Plank(self, PLANK_SPEED)
         self.plank.create_plank(self.gameboard_width // 2 - 20, self.gameboard_height - 20)
+
+    def initialize_ball_object(self) -> None:
         self.ball = Ball(self, self.plank.plank, BALL_SPEED, BALL_SIZE)
         self.ball.create_ball()
         self.initial_ball_coordinates = self.coords(self.ball)
 
-    def restart_game(self) -> None:
+    def reset_game(self) -> None:
         
         """Restarts the game. Deletes the existing widgets and creates new."""
 
@@ -64,7 +70,7 @@ class GameBoard(Canvas):
         self.start_button.config(text="Start game",
                                  command=lambda: self.ball.random_start(),
                                  state=NORMAL)
-        self.set_game_status(False)
+        self.set_game_status(game_is_lost=False)
 
     def get_gameboard_widget_coords(self, game_object: GameItem) -> list[float] | None:
         
@@ -85,7 +91,7 @@ class GameBoard(Canvas):
 
         return self.gameboard_height
 
-    def manage_score_and_difficulty(self) -> None:
+    def set_score_and_plank_size(self) -> None:
         
         """
         Manages displaying the current score as well as taking care of the difficulty,
@@ -104,7 +110,7 @@ class GameBoard(Canvas):
     
     def need_to_reduce(self) -> bool:
         
-        """Checks whether the difficulty needs to be increased. Every 10 score points, it returns true"""
+        """Checks whether the difficulty needs to be increased. Every Modulo score points, it returns true"""
 
         return self.scoreboard.get_player_score() % MODULO_FOR_DIFFICULTY == 0
 
