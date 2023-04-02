@@ -1,8 +1,8 @@
 
 from random import randrange
 
-from game_objects.gameitem import GameItem
-from game_objects.plank import Plank
+from game_objects.moving_objects.gameitem import GameItem
+from game_objects.moving_objects.plank import Plank
 from settings.settings import COLOURS, BALL_TAG
 
 
@@ -98,6 +98,21 @@ class Ball(GameItem):
 
         else:
             return False
+
+    def handle_obstacle_colission(self) -> bool:
+        ...
+        # if self.gameboard.get_gameboard_widget_coords(self.ball)[0] <= Obstacles:
+        #    return True
+        #
+        # elif self.gameboard.get_gameboard_widget_coords(self.ball)[2] >= Obstacle
+        #   return True
+        # elif self.gameboard.get_gameboard_widget_coords(self.ball)[1] >= Obstacle
+        #   return True
+        # elif self.gameboard.get_gameboard_widget_coords(self.ball)[3] >= Obstacle
+        #   return True
+        #
+        # else:
+        #    return False
 
     def move_left(self) -> None:
         
