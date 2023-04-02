@@ -1,9 +1,9 @@
-from Settings.Settings import FRAME_BORDERWIDTH, GAMEBOARD_HEIGTH, GAMEBOARD_WIDTH, TITLE
+from settings.settings import FRAME_BORDERWIDTH, GAMEBOARD_HEIGTH, GAMEBOARD_WIDTH, TITLE
 from tkinter import Button, Label, Frame, BOTH, GROOVE
-from UserInterface.GameBoard import GameBoard
-from UserInterface.Scoreboard import Scoreboard
+from userinterface.gameboard import GameBoard
+from userinterface.scoreboard import Scoreboard
 
-from UserInterface.main_window import MainWindow
+from userinterface.main_window import MainWindow
 
 def main() -> None:
     root = MainWindow()
