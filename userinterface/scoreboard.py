@@ -1,12 +1,12 @@
 
-from tkinter import Label, Tk
+from tkinter import Label, Frame
 
 
 class Scoreboard(Label):
     
     """Represents the score one has already reached. Increases per destroyed obstacle"""
     
-    def __init__(self, master: Tk) -> None:
+    def __init__(self, master: Frame) -> None:
         self.player_score = 0
         super().__init__(master=master,
                          text=f'Current Score: {self.player_score}',
